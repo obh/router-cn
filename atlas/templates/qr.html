@@ -1,0 +1,73 @@
+{{define "qr.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Code Payment</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  #qr-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #timer {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  #instructions {
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <div id="qr-container">    
+  </div>
+  <div id="timer">05:00</div>
+  <div id="instructions">Please complete the payment using the QR code within the next 5 minutes.</div>
+
+  <script>
+      const url = '{{index . "qrUrl"}}';
+      console.log(url);
+    // Create a new QRCode instance and set the value to the URL
+     const qrcode = new QRCode(document.getElementById("qr-container"), {
+        text: url,
+        width: 200,
+        height: 200,
+        });
+    console.log(qrcode)
+    // Countdown timer
+    const timerElement = document.getElementById('timer');
+    const endTime = new Date().getTime() + 5 * 60 * 1000; // 5 minutes in milliseconds
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const timeRemaining = endTime - now;
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+      if (timeRemaining <= 0) {
+        timerElement.textContent = 'Time expired';
+        // Optionally, you can perform an action here when the time expires.
+      }
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
+
+  
+
+</body>
+</html>
+{{end}}

@@ -1,0 +1,40 @@
+// package main
+
+// import (
+// 	"context"
+// 	"fmt"
+// 	"log"
+// 	"net"
+// 	"sync"
+
+// 	"google.golang.org/grpc"
+
+// 	pb "router-cn/protos"
+// )
+
+// func main() {
+// 	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", 9891))
+// 	if err != nil {
+// 		log.Fatalf("failed to listen: %v", err)
+// 	}
+// 	var opts []grpc.ServerOption
+// 	grpcServer := grpc.NewServer(opts...)
+// 	pb.RegisterPaymentGuideServer(grpcServer, newServer())
+// 	grpcServer.Serve(lis)
+
+// }
+
+// type paymentGuideServer struct {
+// 	pb.UnimplementedPaymentGuideServer
+// 	mu sync.Mutex // protects routeNotes
+// }
+
+// func newServer() *paymentGuideServer {
+// 	s := &paymentGuideServer{}
+// 	//s.loadFeatures(*jsonDBFile)
+// 	return s
+// }
+
+// func (p *paymentGuideServer) CreatePayment(ctx context.Context, intent *pb.PaymentIntent) (*pb.Payment, error) {
+// 	return &pb.Payment{PaymentIntent: intent, Id: "dfdfdf"}, nil
+// }

@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "npx prisma generate && next build",
+    "start": "next start",
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@nextui-org/react": "^2.0.18",
+    "@prisma/client": "4.16.2",
+    "flowbite": "^1.8.1",
+    "flowbite-react": "^0.5.0",
+    "next": "^13.4.13",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.2",
+    "postcss": "8.4.7",
+    "prisma": "4.16.2",
+    "tailwindcss": "3.0.23"
+  },
+  "name": "ui",
+  "description": "This is a [Next.js](https://nextjs.org/) project that uses [Prisma](https://www.prisma.io/) and Tailwind.",
+  "version": "1.0.0",
+  "main": "next.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "license": "ISC"
+}

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atlas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atlas
+  template:
+    metadata:
+      labels:
+        app: atlas
+    spec:
+      containers:
+        - name: atlas
+          image: atlas:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_DSN 
+              value:  "root:{password}@tcp(host.docker.internal:3306)/test?parseTime=true"
+            - name: cashfree_appId
+              value: "1848d0ce8441fb8ffa258bc98481"
+            - name: cashfree_secret
+              value: ""
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: atlas-service
+spec:
+  selector:
+    app: atlas
+  ports:
+    - protocol: TCP
+      port: 9811
+      targetPort: 9811
+

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atlas-admin-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atlas-admin-ui
+  template:
+    metadata:
+      labels:
+        app: atlas-admin-ui
+    spec:
+      containers:
+        - name: atlas-admin-ui
+          image: atlas-admin-ui:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_DSN 
+              value: "mysql://root:{password}@host.docker.internal/test"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: atlas-admin-ui-service
+spec:
+  selector:
+    app: atlas-admin-ui
+  ports:
+    - protocol: TCP
+      port: 3000 
+      targetPort: 3000
+

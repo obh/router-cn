@@ -1,0 +1,40 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+    provider             = "mysql"
+    url                  = env("DATABASE_URL")
+    referentialIntegrity = "prisma"
+}
+
+model PaymentIntent {
+  id              Int       @id @default(autoincrement())
+  customer_email  String
+  customer_phone  String
+  customer_address String
+  status          String
+  amount          Float
+  currency        String
+  added_on        DateTime  @default(now())
+  updated_on      DateTime  @updatedAt
+  
+  payment_attempts PaymentAttempt[]
+}
+
+model PaymentAttempt {
+  id                Int       @id @default(autoincrement())
+  payment_intent_id Int
+  payment_method    String
+  processor         String
+  payment_hash      String?
+  processor_ref     String?
+  status            String
+  amount            Float
+  currency          String
+  added_on          DateTime  @default(now())
+  updated_on        DateTime  @updatedAt
+  
+  payment_intent    PaymentIntent @relation(fields: [payment_intent_id], references: [id])
+}
