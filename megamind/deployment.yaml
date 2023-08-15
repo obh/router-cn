@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: megamind 
+spec:
+  containers:
+  - name: megamind
+    image: megamind:latest
+    imagePullPolicy: IfNotPresent  # or IfNotPresent
+    env:
+      - name: NB_SCRIPT
+        value: netbanking.txt

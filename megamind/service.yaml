@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: megamind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: megamind
+  template:
+    metadata:
+      labels:
+        app: megamind
+    spec:
+      containers:
+        - name: megamind
+          image: megamind:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NB_SCRIPT
+              value: netbanking.txt
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: megamind-service
+spec:
+  selector:
+    app: megamind
+  ports:
+    - protocol: TCP
+      port: 9812
+      targetPort: 9812
+
