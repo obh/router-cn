@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+        <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.5.2/cdn.js"></script>
+	</head>
+
+	<body>
+        <div id="cardNumber1"></div>
+        <div class="h-full">
+            <div class="relative px-4 sm:px-6 lg:px-8 pb-8 max-w-lg mx-auto" x-data="{ card: true }">
+                <div class="bg-white px-8 pb-6 rounded-b shadow-lg">
+                     <!-- Toggle -->
+                    <div class="flex justify-center mb-6">
+                        <div class="relative flex w-full p-1 bg-gray-50 rounded">
+                            <span class="absolute inset-0 m-1 pointer-events-none" aria-hidden="true">
+                                <span class="absolute inset-0 w-1/2 bg-white rounded border border-gray-200 shadow-sm transform transition duration-150 ease-in-out" :class="card ? 'translate-x-0' : 'translate-x-full'"></span>
+                            </span>
+                            <button class="relative flex-1 text-sm font-medium p-1 transition duration-150 ease-in-out focus:outline-none focus-visible:ring-2" @click.prevent="card = true">Pay With Card</button>
+                            <button class="relative flex-1 text-sm font-medium p-1 transition duration-150 ease-in-out focus:outline-none focus-visible:ring-2" @click.prevent="card = false">Pay With PayPal</button>
+                        </div>
+                    </div>
+
+                    <div x-show="card">
+                        <div class="space-y-4">
+                            <div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" for="card-nr">Card Number <span class="text-red-500">*</span></label>
+                                    <div id="cardNumber" class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full" ></div>
+                                </div>
+                                 <!-- Expiry and CVC -->
+                                <div class="flex space-x-4">
+                                    <div class="flex-1">
+                                        <label class="block text-sm font-medium mb-1" for="card-expiry">Expiry Date <span class="text-red-500">*</span></label>
+                                        <div id="cardExpiry" class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full" type="text" placeholder="MM/YY" ></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <label class="block text-sm font-medium mb-1" for="card-cvc">CVC <span class="text-red-500">*</span></label>
+                                        <div id="cardCvv" class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full" type="text" placeholder="CVC" ></div>
+                                    </div>
+                                </div>
+                                <!-- Name on Card -->
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" for="card-name">Name on Card <span class="text-red-500">*</span></label>
+                                    <div id="cardHolder" class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full" type="text" placeholder="John Doe" ></div>
+                                </div>
+                                <!-- <input id="card-nr" class="text-sm text-gray-800 bg-white border rounded leading-5 py-2 px-3 border-gray-200 hover:border-gray-300 focus:border-indigo-300 shadow-sm placeholder-gray-400 focus:ring-0 w-full" type="text" /> -->
+                                <!-- <div id="cardCvv" ></div>
+                                <div id="cardExpiry" > </div>
+                                <div id="cardHolder" ></div> -->
+                            </div>
+                            <div class="mt-6">
+                                <div class="mb-4">
+                                    <button id="payBtn" class="font-medium text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-indigo-500 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2">Pay</button>
+                                </div>
+                                <div class="text-xs text-gray-500 italic text-center">You'll be charged $253, including $48 for VAT in Italy</div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                     <!-- PayPal form -->
+                     <div x-show="!card" x-cloak>
+                        <div>
+                            <div class="mb-4">
+                                <button class="font-medium text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-indigo-500 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2">Pay with PayPal - $253.00</button>
+                            </div>
+                            <div class="text-xs text-gray-500 italic text-center">You'll be charged $253, including $48 for VAT in Italy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	<script>
+        const cashfree = Cashfree({
+             mode:"production" //or production
+        });
+
+		const cardComponent = cashfree.create("cardNumber", {});
+		cardComponent.mount("#cardNumber");
+
+		const cardCvv = cashfree.create("cardCvv", {});
+		cardCvv.mount("#cardCvv");
+
+		const cardExpiry = cashfree.create("cardExpiry", {});
+		cardExpiry.mount("#cardExpiry");
+
+		const cardHolder = cashfree.create("cardHolder", {});
+		cardHolder.mount("#cardHolder");
+
+		const showError = function(e){
+			alert(e.message)
+		}
+
+        cardComponent.on('change', function (data) {
+            console.log(data)
+        })
+
+		document.querySelector("#payBtn").addEventListener("click", async () => {
+			cashfree.pay({
+				paymentMethod: cardComponent,
+				paymentSessionId: "yourPaymentSession",
+				returnUrl: "https://merchantsite.com/return?order_id={order_id}",
+			}).then(function (data) {
+				if (data != null && data.error) {
+					return showError(data.error)
+				}
+			});
+		})
+		</script>
+	</body>
+</html>

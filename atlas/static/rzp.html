@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Razorpay Payment Form</title>
+</head>
+<body>
+    <form action="https://api.razorpay.com/v1/payments/create/checkout" method="POST">
+        <input type="hidden" name="method" value="card">
+        <input type="hidden" name="card[number]" value="">
+        <input type="hidden" name="card[cvv]" value="123">
+        <input type="hidden" name="card[name]" value="testname">
+        <input type="hidden" name="card[expiry_month]" value="01">
+        <input type="hidden" name="card[expiry_year]" value="25">
+        <input type="hidden" name="email" value="gaurav.kumar@example.com">
+        <input type="hidden" name="contact" value="9123456780">
+        <input type="hidden" name="order_id" value="order_MRfoqJn8WnfJD2">
+        <input type="hidden" name="key_id" value="rzp_live_">
+        <input type="hidden" name="amount" value="1000">
+        <input type="hidden" name="currency" value="INR">
+        <input type="hidden" name="description" value="A Wild Sheep Chase">
+        <input type="hidden" name="notes[shipping address]" value="L-16, The Business Centre, 61 Wellfield Road, New Delhi - 110001">
+        <input type="hidden" name="callback_url" value="https://example.com/payment-callback">
+        <button type="submit">Submit Payment</button>
+    </form>
+</body>
+</html>

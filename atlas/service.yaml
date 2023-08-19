@@ -20,6 +20,8 @@ spec:
             - name: MYSQL_DSN 
               value:  "root:{password}@tcp(host.docker.internal:3306)/test?parseTime=true"
             - name: cashfree_appId
+              #secretRef:
+              #  fljdf 
               value: "1848d0ce8441fb8ffa258bc98481"
             - name: cashfree_secret
               value: ""

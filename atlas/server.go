@@ -6,7 +6,6 @@ import (
 	"atlas/service/impl"
 	"database/sql"
 	"io"
-	"net/http"
 	"os"
 	"text/template"
 	"time"
@@ -31,6 +30,9 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	// Static Routes
+	e.Static("/static", "static")
+
 	//Templates
 	renderer := &TemplateRenderer{
 		templates: template.Must(template.ParseGlob("templates/*.html")),
@@ -42,11 +44,11 @@ func main() {
 	r := impl.InitRouterController()
 	// Routes
 	routes.InitRoutes(e, p, r)
-	e.GET("/something", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "qr.html", map[string]interface{}{
-			"qrUrl": "https://www.cashfree.com",
-		})
-	})
+	// e.GET("/something", func(c echo.Context) error {
+	// 	return c.Render(http.StatusOK, "qr.html", map[string]interface{}{
+	// 		"qrUrl": "https://www.cashfree.com",
+	// 	})
+	// })
 
 	// Start server
 	e.Logger.Fatal(e.Start(":9811"))

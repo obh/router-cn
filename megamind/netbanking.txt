@@ -1,4 +1,4 @@
 function nbEvalScript(param)
 {
-    return "razorpay"
+    return "cashfree"
 }
